@@ -10,6 +10,7 @@ module workshop_nft::workshop_nft;
 
 use std::string;
 use sui::url::{Self, Url};
+use sui::token::recipient;
 
 public struct NFT has key, store{
     id: UID,
@@ -32,4 +33,10 @@ public entry fun mint(
         url: url::new_unsafe_from_bytes(url),
     };
     transfer::public_transfer(nft, sender);
+}
+
+
+public entry fun transfer(nft:NFT, recipient: address, _: &mut TxContext)
+{
+    transfer::public_transfer(nft, recipient);
 }
